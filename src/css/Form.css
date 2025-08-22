@@ -1,0 +1,44 @@
+#create-table-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.order-input,
+#tableName {
+  width: 40rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-order-button {
+  margin-top: 1rem;
+}
+.form-buttons {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+}
+.add-order-button {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.submit-button {
+  background-color: #cf871b;
+  color: white;
+  border: none;
+  padding: 0.3rem 1rem;
+  border-radius: 15px;
+  cursor: pointer;
+  width: 50%;
+  font-weight: bold;
+}
+
+.submit-button:hover {
+  background-color: #da9629;
+}
