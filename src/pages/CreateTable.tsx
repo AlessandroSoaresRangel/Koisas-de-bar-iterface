@@ -9,23 +9,24 @@ import type { FormModel } from "../model/FormModel";
  * @returns CreateTable component.
  */
 function CreateTable() {
-  const [formData, setFormData] = useState<FormModel | null>(null);
+  const [data, setFormData] = useState<FormModel[]>([]);
   const handleFormSubmit = (form: FormData) => {
-    const data = Object.fromEntries(form);
+    const dataFromForm = Object.fromEntries(form);
     const cleanData: FormModel = {
-      tableName: data.tableName as string,
+      tableName: dataFromForm.tableName as string,
       orders: [],
     };
-    data.order && cleanData.orders.push(data.order as string);
+    dataFromForm.order && cleanData.orders.push(dataFromForm.order as string);
     for (let i = 0; i < 8; i++) {
       const orderKey = `order${i}`;
-      if (data[orderKey]) {
-        cleanData.orders.push(data[orderKey] as string);
+      if (dataFromForm[orderKey]) {
+        cleanData.orders.push(dataFromForm[orderKey] as string);
       }
     }
-    setFormData(cleanData);
-    console.log("Form submitted:", cleanData);
+    data.push(cleanData);
+    console.log("Form submitted:", data);
   };
+
   return (
     <>
       <NavBar />
