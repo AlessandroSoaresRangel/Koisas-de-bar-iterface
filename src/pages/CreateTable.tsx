@@ -10,17 +10,15 @@ import type { FormModel } from "../model/FormModel";
  */
 function CreateTable() {
   const [data, setFormData] = useState<FormModel[]>([]);
-  const handleFormSubmit = (form: FormData) => {
-    const dataFromForm = Object.fromEntries(form);
+  const handleFormSubmit = (form: FormModel) => {
+    console.log(form);
     const cleanData: FormModel = {
-      tableName: dataFromForm.tableName as string,
+      tableName: form.tableName,
       orders: [],
     };
-    dataFromForm.order && cleanData.orders.push(dataFromForm.order as string);
     for (let i = 0; i < 8; i++) {
-      const orderKey = `order${i}`;
-      if (dataFromForm[orderKey]) {
-        cleanData.orders.push(dataFromForm[orderKey] as string);
+      if (form.orders[i]) {
+        cleanData.orders.push(form.orders[i]);
       }
     }
     data.push(cleanData);
@@ -30,7 +28,7 @@ function CreateTable() {
   return (
     <>
       <NavBar />
-      <Form dados={handleFormSubmit} />
+      <Form data={handleFormSubmit} values={null} />
     </>
   );
 }

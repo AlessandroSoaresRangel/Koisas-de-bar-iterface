@@ -1,15 +1,25 @@
 import { useState } from "react";
 import "../css/Form.css";
+import type { FormModel } from "../model/FormModel";
 import ButtonCustom from "./ButtonCustom";
 
 /**
  * This component renders the form for creating a new table.
+ * @param data - A callback function that receives the form data upon submission.
+ * @param values - Initial values for the form fields, if any.
  * @returns Form component.
  */
-function Form({ dados }: { dados: (data: FormData) => void }) {
+function Form({
+  data,
+  values,
+}: {
+  data: (data: FormModel) => void;
+  values: FormModel | null;
+}) {
   const [count, setCount] = useState(0);
-  const [tableName, setTableName] = useState("");
-  const [orders, setOrders] = useState<string[]>([]);
+  const [tableName, setTableName] = useState(values?.tableName || undefined);
+  const [orders, setOrders] = useState<string[]>(values?.orders || []);
+  console.log(tableName);
   return (
     <div id="create-table-container">
       <form
@@ -18,16 +28,22 @@ function Form({ dados }: { dados: (data: FormData) => void }) {
         action="/"
         onSubmit={(e) => {
           e.preventDefault();
-          const formData = new FormData(e.currentTarget);
-          console.log(tableName);
-          setTableName("");
-          setOrders([]);
+
           for (let i = 1; i < 6; i++) {
             const input = document.getElementById(`order${i}`);
             input?.setAttribute("hidden", "true");
           }
+          if (orders.length > 0) {
+            for (let i = 1; i < orders.length; i++) {
+              const input = document.getElementById(`order${i}`);
+              input?.removeAttribute("hidden");
+            }
+          }
+          if (!tableName) return;
+          data({ tableName, orders });
           setCount(0);
-          dados(formData);
+          setTableName(undefined);
+          setOrders([]);
         }}
       >
         <input
@@ -36,8 +52,10 @@ function Form({ dados }: { dados: (data: FormData) => void }) {
           name="tableName"
           placeholder="Número da mesa"
           required
-          onChange={(e) => setTableName(e.target.value)}
-          value={tableName}
+          onChange={(e) =>
+            setTableName(e.target.value ? parseInt(e.target.value) : undefined)
+          }
+          value={tableName ? tableName : ""}
         />
         <input
           type="text"

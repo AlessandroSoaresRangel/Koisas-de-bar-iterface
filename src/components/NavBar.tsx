@@ -24,6 +24,11 @@ function NavBar() {
               estoque
             </a>
           </li>
+          <li id="cards" className="nav-item">
+            <Link className="nav-link" to="/cards">
+              Cards
+            </Link>
+          </li>
         </ul>
       </nav>
       <Outlet />

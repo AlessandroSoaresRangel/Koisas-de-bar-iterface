@@ -1,5 +1,5 @@
 interface FormModel {
-  tableName: string;
+  tableName: number;
   orders: string[];
 }
 
